@@ -1,1 +1,31 @@
-<p>Login form</p>
+<div class="auth-wrapper">
+    <section class="auth-left-section"></section>
+    <section class="auth-right-section">
+        <div class="form-container">
+            <h1>Log in</h1>
+            <p>Enter your credentials to access your account.</p>
+            <form [formGroup]="loginForm" (ngSubmit)="login()">
+                <div>
+                    <mat-form-field style="width:100%" appearance="outline">
+                        <mat-label>Email</mat-label>
+                        <input type="email" formControlName="email" matInput autofocus>
+                        <!-- <mat-error>
+                            Please enter a valid email address
+                        </mat-error> -->
+
+                    </mat-form-field>
+                </div>
+                <div>
+                    <mat-form-field style="width:100%" appearance="outline">
+                        <mat-label>Password</mat-label>
+                        <input type="Password" formControlName="password" matInput>
+                        <!-- <mat-error>
+                            Password is required
+                        </mat-error> -->
+                    </mat-form-field>
+                </div>
+                <button mat-raised-button color="primary" style="width:100%">Login</button>
+            </form>
+        </div>
+    </section>
+</div>
