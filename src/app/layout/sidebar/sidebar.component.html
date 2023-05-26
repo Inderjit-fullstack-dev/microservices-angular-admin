@@ -1,0 +1,19 @@
+<mat-drawer-container class="sidebar-container" [hasBackdrop]="false">
+    <mat-drawer #drawer mode="side" opened="true">
+        <div class="sidebar-top">
+            <mat-icon>shopping_bag</mat-icon> <span>eShop</span>
+        </div>
+        <ul class="nav-menus">
+            <li><a href="javascript:void(0)" class="active"><mat-icon>dashboard</mat-icon> Dashboard</a></li>
+            <li><a href="javascript:void(0)"><mat-icon>shopping_bag</mat-icon> Cateories</a></li>
+            <li><a href="javascript:void(0)"><mat-icon>folder</mat-icon> Products</a></li>
+            <li><a href="javascript:void(0)"><mat-icon>settings</mat-icon> Settings</a></li>
+        </ul>
+    </mat-drawer>
+    <mat-drawer-content>
+        <app-header [sidebarRef]="drawer"></app-header>
+        <div class="wrapper">
+            <router-outlet></router-outlet>
+        </div>
+    </mat-drawer-content>
+</mat-drawer-container>
