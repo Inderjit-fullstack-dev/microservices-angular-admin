@@ -5,10 +5,9 @@ import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 import { HttpClientModule } from '@angular/common/http';
 import { AuthLayoutComponent } from './layout/app-layout/auth-layout/auth-layout.component';
-import { MainLayoutComponent } from './layout/app-layout/main-layout/main-layout.component';
-import { HeaderComponent } from './layout/header/header.component';
-import { SidebarComponent } from './layout/sidebar/sidebar.component';
 import { LayoutModule } from './layout/layout.module';
+import { ToastrModule } from 'ngx-toastr';
+import { NgxSpinnerModule } from 'ngx-spinner';
 
 @NgModule({
   declarations: [AppComponent, AuthLayoutComponent],
@@ -18,6 +17,8 @@ import { LayoutModule } from './layout/layout.module';
     AppRoutingModule,
     HttpClientModule,
     LayoutModule,
+    ToastrModule.forRoot(),
+    NgxSpinnerModule.forRoot({ type: 'ball-scale-multiple' }),
   ],
   providers: [],
   bootstrap: [AppComponent],

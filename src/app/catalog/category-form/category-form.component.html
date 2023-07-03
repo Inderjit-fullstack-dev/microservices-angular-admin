@@ -1,0 +1,28 @@
+<div class="page-title-wrapper">
+    <p class="page-title">{{ category ? 'Edit' : 'Add' }} Category </p>
+    <a mat-raised-button color="primary" routerLink="/category">List</a>
+</div>
+<div class="row">
+    <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+        <div>
+            <mat-form-field style="width:100%" appearance="outline">
+                <mat-label>Category Name</mat-label>
+                <input type="text" formControlName="categoryName" matInput autofocus>
+                <!-- <mat-error *ngIf="formControls['categoryName'].invalid && formControls['categoryName'].touched">
+                    Category Name is required
+                </mat-error> -->
+            </mat-form-field>
+        </div>
+        <div>
+            <mat-label>Image*</mat-label>
+            <p>
+                <input type="file" class="file-upload" formControlName="image" (change)="handleFileInput($event)"
+                    #fileInput>
+            </p>
+            <p *ngIf="category?.image">
+                <img [src]="category?.image" class="image-thumbnail" />
+            </p>
+        </div> <br />
+        <button mat-raised-button color="primary" type="submit" [disabled]="categoryForm.invalid">Submit</button>
+    </form>
+</div>

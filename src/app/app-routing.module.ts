@@ -28,6 +28,17 @@ const routes: Routes = [
       },
     ],
   },
+  {
+    path: 'category',
+    component: MainLayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () =>
+          import('./catalog/catalog.module').then((m) => m.CatalogModule),
+      },
+    ],
+  },
   //{ path: '**', component: Page404Component },
 ];
 

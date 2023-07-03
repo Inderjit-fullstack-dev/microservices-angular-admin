@@ -1,28 +1,32 @@
 import { authMicroservice } from './../constants/routes';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, of } from 'rxjs';
+import { BehaviorSubject, ReplaySubject, map, of } from 'rxjs';
 import { User } from '../interfaces/user';
+import { LoginResponse } from '../interfaces/loginResponse';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
-  private currentUserSubject: BehaviorSubject<User>;
+  private currentUserSource = new ReplaySubject<LoginResponse>(1);
+
+  currentUser$ = this.currentUserSource.asObservable();
+
   constructor(private httpClient: HttpClient) {}
 
-  login(email: string, password: string) {
+  login(username: string, password: string) {
     return this.httpClient
       .post(authMicroservice.login, {
-        email,
+        username,
         password,
       })
       .pipe(
-        map((user) => {
-          console.log(user);
-          localStorage.setItem('user', JSON.stringify(user));
-          this.currentUserSubject.next(user);
-          return user;
+        map((loginResponse: LoginResponse) => {
+          if (loginResponse) {
+            localStorage.setItem('user', JSON.stringify(loginResponse));
+            this.currentUserSource.next(loginResponse);
+          }
         })
       );
   }
@@ -30,7 +34,7 @@ export class AuthService {
   logout() {
     // remove user from local storage to log user out
     localStorage.removeItem('user');
-    this.currentUserSubject.next(null);
+    this.currentUserSource.next(null);
     return of({ success: false });
   }
 }

@@ -1,3 +1,4 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import {
   FormBuilder,
@@ -5,6 +6,9 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
+import { Router } from '@angular/router';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { ToastrService } from 'ngx-toastr';
 import { AuthService } from 'src/app/core/services/auth.service';
 
 @Component({
@@ -15,7 +19,13 @@ import { AuthService } from 'src/app/core/services/auth.service';
 export class SigninComponent implements OnInit {
   loginForm: FormGroup;
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {}
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private toastr: ToastrService,
+    private spinner: NgxSpinnerService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.initForm();
@@ -23,19 +33,24 @@ export class SigninComponent implements OnInit {
 
   initForm() {
     this.loginForm = this.fb.group({
-      email: new FormControl('john@mail.com', [
-        Validators.required,
-        Validators.email,
-      ]),
-      password: new FormControl('12345', [Validators.required]),
+      username: new FormControl('admin', [Validators.required]),
+      password: new FormControl('admin@123', [Validators.required]),
     });
   }
 
   login() {
     if (!this.loginForm.valid) return;
-    const { email, password } = this.loginForm.value;
-    this.authService.login(email, password).subscribe((result) => {
-      console.log(result);
+    const { username, password } = this.loginForm.value;
+    this.spinner.show();
+    this.authService.login(username, password).subscribe({
+      next: () => {
+        this.spinner.hide();
+        this.router.navigateByUrl('/dashboard');
+      },
+      error: (err) => {
+        this.spinner.hide();
+        this.toastr.error(err?.error?.message || 'An error occurred');
+      },
     });
   }
 }
