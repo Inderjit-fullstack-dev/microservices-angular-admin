@@ -33,8 +33,8 @@ export class SigninComponent implements OnInit {
 
   initForm() {
     this.loginForm = this.fb.group({
-      username: new FormControl('admin', [Validators.required]),
-      password: new FormControl('admin@123', [Validators.required]),
+      username: new FormControl('', [Validators.required]),
+      password: new FormControl('', [Validators.required]),
     });
   }
 
@@ -45,7 +45,7 @@ export class SigninComponent implements OnInit {
     this.authService.login(username, password).subscribe({
       next: () => {
         this.spinner.hide();
-        this.router.navigateByUrl('/dashboard');
+        this.router.navigateByUrl('/catalog/categories');
       },
       error: (err) => {
         this.spinner.hide();

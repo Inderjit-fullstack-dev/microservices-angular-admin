@@ -47,6 +47,7 @@ mat-drawer {
   display: flex;
   font-size: 12px;
   align-items: center;
+  outline: none !important;
 }
 
 .nav-menus li a > mat-icon {
@@ -56,6 +57,6 @@ mat-drawer {
 }
 
 .nav-menus li a.active {
-  background-color: #282750;
+  background-color: #37375f;
   color: #fff;
 }

@@ -1,0 +1,218 @@
+<div class="page-title-wrapper">
+    <p class="page-title">Products</p>
+    <a mat-raised-button color="primary" routerLink="/catalog/products">List</a>
+</div>
+
+<form *ngIf="form" [formGroup]="form" (ngSubmit)="onSubmit()" enctype="multipart/form-data">
+    <mat-tab-group>
+        <mat-tab label="Basic Product Information">
+            <div class="form-container">
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div>
+                            <mat-form-field style="width:100%" appearance="outline">
+                                <mat-label>Product Name</mat-label>
+                                <input type="text" formControlName="productName" matInput autofocus>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div>
+                            <mat-form-field style="width:100%" appearance="outline">
+                                <mat-label>Product SubTitle</mat-label>
+                                <input type="text" formControlName="productSubTitle" matInput autofocus>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div>
+                            <mat-form-field style="width:100%" appearance="outline">
+                                <mat-label>Category</mat-label>
+                                <mat-select formControlName="categoryId">
+                                    <mat-option *ngFor="let category of categories" [value]="category.id">
+                                        {{category.categoryName}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div>
+                            <mat-form-field style="width:100%" appearance="outline">
+                                <mat-label>Parent Product</mat-label>
+                                <mat-select formControlName="parentProductId">
+                                    <mat-option *ngFor="let product of parentProducts" [value]="product.id">
+                                        {{product.productName}}
+                                    </mat-option>
+                                </mat-select>
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+                <div>
+                    <label for="">Short Description</label>
+                    <div class="NgxEditor__Wrapper">
+                        <ngx-editor-menu [editor]="sdEditor" [toolbar]="toolbar">
+                        </ngx-editor-menu>
+                        <ngx-editor [editor]="sdEditor" formControlName="shortDescription"
+                            [disabled]="false"></ngx-editor>
+                    </div>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Images">
+            <div class="form-container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div>
+                            <mat-label>Image1*</mat-label>
+                            <p>
+                                <input type="file" class="file-upload" formControlName="image1"
+                                    (change)="handleImage1Input($event)" #image1Ref>
+                            </p>
+                            <p *ngIf="product?.image1">
+                                <img [src]="product?.image1" class="image-thumbnail" />
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div>
+                            <mat-label>Image2*</mat-label>
+                            <p>
+                                <input type="file" class="file-upload" formControlName="image2"
+                                    (change)="handleImage2Input($event)" #image2Ref>
+                            </p>
+                            <p *ngIf="product?.image2">
+                                <img [src]="product?.image2" class="image-thumbnail" />
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Downloads">
+
+            <div class="form-container">
+                <div class="row">
+                    <div class="col-md-6">
+
+                        <div>
+                            <mat-form-field style="width:100%" appearance="outline">
+                                <mat-label>Spec Sheet Title</mat-label>
+                                <input type="text" formControlName="specSheettTitle" matInput autofocus>
+                            </mat-form-field>
+                        </div>
+
+                        <div>
+                            <mat-label>Spec Sheet File (.Pdf)</mat-label>
+                            <p>
+                                <input type="file" class="file-upload" formControlName="specSheetFile"
+                                    (change)="handleSpecFileInput($event)" #specRef>
+                            </p>
+                            <p *ngIf="product?.specSheetFilename">
+                                <a mat-raised-button color="warn" [href]="product?.specSheetFilename"
+                                    target="_blank"><mat-icon>description</mat-icon> View
+                                    File</a>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+
+                        <div>
+                            <mat-form-field style="width:100%" appearance="outline">
+                                <mat-label>Installation Title</mat-label>
+                                <input type="text" formControlName="installationTitle" matInput autofocus>
+                            </mat-form-field>
+                        </div>
+
+                        <div>
+                            <mat-label>Installation File (.Pdf)</mat-label>
+                            <p>
+                                <input type="file" class="file-upload" formControlName="installationFile"
+                                    (change)="handleInstallationFileInput($event)" #installationRef>
+                            </p>
+                            <p *ngIf="product?.installationFilename">
+                                <a mat-raised-button color="warn" [href]="product?.installationFilename"
+                                    target="_blank"><mat-icon>description</mat-icon>
+                                    View File</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </mat-tab>
+        <mat-tab label="Description">
+            <div class="form-container">
+                <div>
+                    <div class="NgxEditor__Wrapper">
+                        <ngx-editor-menu [editor]="descriptionEditor" [toolbar]="toolbar">
+                        </ngx-editor-menu>
+                        <ngx-editor [editor]="descriptionEditor" formControlName="description"
+                            [disabled]="false"></ngx-editor>
+                    </div>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label=" Product Detail ">
+            <div class="form-container">
+                <label for="">Product Detail</label>
+                <div class="NgxEditor__Wrapper">
+                    <ngx-editor-menu [editor]="productDetailEditor" [toolbar]="toolbar">
+                    </ngx-editor-menu>
+                    <ngx-editor [editor]="productDetailEditor" formControlName="productDetail"
+                        [disabled]="false"></ngx-editor>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Accessories">
+            <div class="form-container">
+                <label for="">Accessories</label>
+                <div class="NgxEditor__Wrapper">
+                    <ngx-editor-menu [editor]="accessoryEditor" [toolbar]="toolbar">
+                    </ngx-editor-menu>
+                    <ngx-editor [editor]="accessoryEditor" formControlName="acessories" [disabled]="false"></ngx-editor>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Air Message">
+            <div class="form-container">
+                <label for="">Air Message</label>
+                <div class="NgxEditor__Wrapper">
+                    <ngx-editor-menu [editor]="airMessageEditor" [toolbar]="toolbar">
+                    </ngx-editor-menu>
+                    <ngx-editor [editor]="airMessageEditor" formControlName="airMessage"
+                        [disabled]="false"></ngx-editor>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Water Message">
+            <div class="form-container">
+                <label for="">Water Message</label>
+                <div class="NgxEditor__Wrapper">
+                    <ngx-editor-menu [editor]="waterMessageEditor" [toolbar]="toolbar">
+                    </ngx-editor-menu>
+                    <ngx-editor [editor]="waterMessageEditor" formControlName="waterMessage"
+                        [disabled]="false"></ngx-editor>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="Models">
+            <div class="form-container">
+                <label for="">Models</label>
+                <div class="NgxEditor__Wrapper">
+                    <ngx-editor-menu [editor]="modelEditor" [toolbar]="toolbar">
+                    </ngx-editor-menu>
+                    <ngx-editor [editor]="modelEditor" formControlName="models" [disabled]="false"></ngx-editor>
+                </div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+    <br />
+    <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Submit</button>
+</form>

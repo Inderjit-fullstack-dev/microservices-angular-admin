@@ -1,13 +1,19 @@
 <mat-drawer-container class="sidebar-container" [hasBackdrop]="true">
     <mat-drawer #drawer mode="over" opened="false">
         <div class="sidebar-top">
-            <mat-icon>shopping_bag</mat-icon> <span>eShop</span>
+            <mat-icon>shopping_bag</mat-icon> <span>Administrator</span>
         </div>
         <ul class="nav-menus">
-            <li><a routerLink="/dashboard"><mat-icon>dashboard</mat-icon> Dashboard</a></li>
-            <li><a routerLink="/category"><mat-icon>shopping_bag</mat-icon> Cateories</a></li>
-            <li><a href="javascript:void(0)"><mat-icon>folder</mat-icon> Products</a></li>
-            <li><a href="javascript:void(0)"><mat-icon>settings</mat-icon> Settings</a></li>
+            <!-- <li><a routerLink="/dashboard"><mat-icon>dashboard</mat-icon> Dashboard</a></li> -->
+            <li><a routerLink="/catalog/categories" routerLinkActive="active"
+                    (click)="drawer.close()"><mat-icon>shopping_bag</mat-icon>
+                    Cateories</a></li>
+            <li><a routerLink="/catalog/products" routerLinkActive="active"
+                    (click)="drawer.close()"><mat-icon>folder</mat-icon> Products</a>
+            </li>
+            <li><a href="javascript:void(0)" (click)="logout()" (click)="drawer.close()"><mat-icon>logout</mat-icon>
+                    Logout</a>
+            </li>
         </ul>
     </mat-drawer>
     <mat-drawer-content>

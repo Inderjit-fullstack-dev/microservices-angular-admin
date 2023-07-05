@@ -31,3 +31,25 @@ body {
   height: 150px;
   object-fit: contain;
 }
+
+.form-container {
+  box-sizing: border-box;
+  padding: 20px 10px;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  margin-top: 10px;
+  border-radius: 3px;
+}
+
+.NgxEditor__Content {
+  min-height: 200px !important;
+}
+
+.mat-mdc-tab-body-content {
+  overflow-x: hidden !important;
+}
+
+.doc-link {
+  text-decoration: none;
+  color: red;
+}

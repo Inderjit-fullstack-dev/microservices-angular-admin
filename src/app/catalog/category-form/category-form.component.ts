@@ -5,7 +5,7 @@ import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { Category } from 'src/app/core/interfaces/category';
 import { CatalogService } from 'src/app/core/services/catalog.service';
-import { getUserData } from 'src/app/core/utility';
+import { getUserData } from 'src/app/core/helpers/utility';
 
 @Component({
   selector: 'app-category-form',
@@ -96,19 +96,16 @@ export class CategoryFormComponent implements OnInit {
     }
 
     this.spinner.show();
-    console.log(this.category);
     const methodRef = !this.category
       ? this.catalogService.addCategory(formData)
       : this.catalogService.updateCategory(this.category.id, formData);
-
-    console.log(methodRef);
 
     methodRef.subscribe({
       next: (_) => {
         this.spinner.hide();
         this.toastr.success('Category saved successfully.');
         this.resetForm();
-        this.router.navigateByUrl('/category');
+        this.router.navigateByUrl('/catalog/categories');
       },
       error: (err) => {
         this.spinner.hide();

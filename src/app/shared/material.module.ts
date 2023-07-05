@@ -13,6 +13,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatMenuModule } from '@angular/material/menu';
 import { MatTableModule } from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTabsModule } from '@angular/material/tabs';
+
 const materialModules = [
   MatButtonModule,
   MatCardModule,
@@ -28,6 +30,7 @@ const materialModules = [
   MatMenuModule,
   MatTableModule,
   MatPaginatorModule,
+  MatTabsModule,
 ];
 
 @NgModule({

@@ -1,6 +1,6 @@
 <div class="page-title-wrapper">
     <p class="page-title">{{ category ? 'Edit' : 'Add' }} Category </p>
-    <a mat-raised-button color="primary" routerLink="/category">List</a>
+    <a mat-raised-button color="primary" routerLink="/catalog/categories">List</a>
 </div>
 <div class="row">
     <form [formGroup]="categoryForm" (ngSubmit)="onSubmit()" enctype="multipart/form-data">

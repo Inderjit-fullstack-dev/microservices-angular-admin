@@ -1,22 +1,26 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { MatTableDataSource } from '@angular/material/table';
 import { NgxSpinnerService } from 'ngx-spinner';
 import { ToastrService } from 'ngx-toastr';
 import { ListResponse } from 'src/app/core/interfaces/ListResponse';
-import { Category } from 'src/app/core/interfaces/category';
+import { Product } from 'src/app/core/interfaces/product';
 import { CatalogService } from 'src/app/core/services/catalog.service';
 import { DeleteDialogComponent } from 'src/app/shared/delete-dialog/delete-dialog.component';
 
 @Component({
-  selector: 'app-category-list',
-  templateUrl: './category-list.component.html',
-  styleUrls: ['./category-list.component.css'],
+  selector: 'app-product-list',
+  templateUrl: './product-list.component.html',
+  styleUrls: ['./product-list.component.css'],
 })
-export class CategoryListComponent implements OnInit {
-  displayedColumns: string[] = ['categoryName', 'actions'];
-  categories: Category[];
-  categoryResponse: ListResponse<Category>;
+export class ProductListComponent implements OnInit {
+  displayedColumns: string[] = [
+    'productName',
+    'category',
+    'parentProduct',
+    'actions',
+  ];
+  categories: Product[];
+  productResponse: ListResponse<Product>;
   pageSizeOptions = [5, 10, 25];
   currentPage: number;
   params = {
@@ -31,18 +35,19 @@ export class CategoryListComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.getAllCategories(this.params);
+    this.getAllProducts(this.params);
   }
 
-  getAllCategories(params = null) {
+  getAllProducts(params = null) {
     this.spinner.show();
-    this.catalogService.getAllCategories(params).subscribe({
-      next: (result: ListResponse<Category>) => {
+    this.catalogService.getAllProducts(params).subscribe({
+      next: (result: ListResponse<Product>) => {
         this.spinner.hide();
-        //this.categories = result.data;
-        this.categoryResponse = result;
+        this.productResponse = result;
       },
-      error: () => {},
+      error: (err) => {
+        this.toastr.error(err?.error?.message || 'An error occurred');
+      },
     });
   }
 
@@ -52,10 +57,10 @@ export class CategoryListComponent implements OnInit {
       pageNumber: event?.pageIndex + 1,
       pageSize: event?.pageSize,
     };
-    this.getAllCategories(newParam);
+    this.getAllProducts(newParam);
   }
 
-  onDeleteButtonClick(element: Category): void {
+  onDeleteButtonClick(element: Product): void {
     const dialogRef = this.dialog.open(DeleteDialogComponent, {
       width: '250px',
       data: {},
@@ -65,12 +70,12 @@ export class CategoryListComponent implements OnInit {
       if (result === true) {
         if (element && element.id) {
           this.spinner.show();
-          this.catalogService.deleteCategoryById(element.id).subscribe({
+          this.catalogService.deleteProduct(element.id).subscribe({
             next: () => {
-              this.toastr.success('Category has been deleted successfully.');
+              this.toastr.success('Product has been deleted successfully.');
               this.dialog.closeAll();
               this.spinner.hide();
-              this.getAllCategories(this.params);
+              this.getAllProducts(this.params);
             },
             error: (err) => {
               this.toastr.error(err?.error?.message || 'An error occurred');

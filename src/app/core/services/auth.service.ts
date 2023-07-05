@@ -1,8 +1,7 @@
 import { authMicroservice } from './../constants/routes';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, ReplaySubject, map, of } from 'rxjs';
-import { User } from '../interfaces/user';
+import { ReplaySubject, map, of } from 'rxjs';
 import { LoginResponse } from '../interfaces/loginResponse';
 
 @Injectable({
